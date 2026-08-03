@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Senco | payments for the businesses everyone else drops</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue:#1A73E8; --green:#07F3AB; --lblue:#7BDAF3; --lgreen:#8AF4AB; --green-d:#0C8F66;
+    --ink:#101828; --body:#475467; --mut:#8A94A6;
+    --gray:#F7F8F9; --line:#EAECF0;
+    --band:
+      radial-gradient(70% 80% at 0% 0%,#96F3AE 0%,rgba(150,243,174,0) 62%),
+      radial-gradient(70% 80% at 100% 0%,#96DFF2 0%,rgba(150,223,242,0) 62%),
+      radial-gradient(70% 80% at 0% 100%,#7BDAF0 0%,rgba(123,218,240,0) 62%),
+      radial-gradient(70% 80% at 100% 100%,#81F0B3 0%,rgba(129,240,179,0) 62%),
+      linear-gradient(120deg,#A9EDD3 0%,#A3E4EA 100%);
+    --grad:linear-gradient(105deg,var(--blue) 0%,var(--green) 100%);
+    --sh:0 8px 30px rgba(16,24,40,.08);
+    --ease:cubic-bezier(.22,1,.36,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:"Poppins",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:#fff;color:var(--body);line-height:1.7;font-size:16px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  ::selection{background:rgba(123,218,243,.5)}
+  :focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:6px}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+
+  /* floating pill nav */
+  .navzone{position:sticky;top:14px;z-index:60;padding:0 20px}
+  .navbar{max-width:1080px;margin:0 auto;background:#fff;border-radius:999px;box-shadow:0 4px 24px rgba(16,24,40,.10);height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 10px 0 24px}
+  .logo{display:flex;align-items:center;text-decoration:none}
+  .senco-mark{height:22px;width:auto;aspect-ratio:3308/970;display:block}
+  .navcta{font-size:14px;font-weight:600;color:#fff;background:var(--blue);padding:11px 22px;border-radius:999px;text-decoration:none;transition:transform .18s var(--ease),box-shadow .18s ease,filter .18s ease}
+  .navcta:hover{transform:translateY(-1px);filter:brightness(1.07);box-shadow:0 10px 24px rgba(26,115,232,.35)}
+
+  /* hero band */
+  .hero{position:relative;margin-top:-74px;padding:150px 0 90px;background:var(--band);overflow:hidden;text-align:center}
+  .hero::before{content:"";position:absolute;inset:0;background:
+    radial-gradient(760px 420px at 50% -16%,rgba(255,255,255,.5),transparent 60%);pointer-events:none}
+  .hero .wrap{position:relative}
+  .kicker{display:inline-flex;align-items:center;gap:9px;font-size:12.5px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--ink);background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.9);padding:9px 18px;border-radius:999px;margin-bottom:26px;backdrop-filter:blur(6px)}
+  .kicker::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green-d)}
+  h1{font-size:clamp(36px,5.4vw,58px);line-height:1.12;font-weight:700;letter-spacing:-.02em;color:var(--ink);max-width:860px;margin:0 auto}
+  .lead{font-size:clamp(16px,2vw,18.5px);max-width:680px;margin:22px auto 0;color:#2A3648;line-height:1.75}
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:34px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:15.5px;font-weight:600;padding:15px 30px;border-radius:999px;text-decoration:none;transition:transform .18s var(--ease),box-shadow .18s ease,filter .18s ease,border-color .18s ease,color .18s ease}
+  .btn.primary{background:var(--blue);color:#fff}
+  .btn.primary:hover{transform:translateY(-2px);filter:brightness(1.06);box-shadow:0 14px 30px rgba(26,115,232,.38)}
+  .btn.blue{background:var(--blue);color:#fff}
+  .btn.blue:hover{transform:translateY(-2px);filter:brightness(1.06);box-shadow:0 14px 30px rgba(26,115,232,.35)}
+  .btn.ghost{color:var(--ink);background:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.95);backdrop-filter:blur(6px)}
+  .btn.ghost:hover{transform:translateY(-2px);background:#fff}
+  .micro{font-size:13.5px;color:#2A3648;margin-top:18px;opacity:.85}
+
+  /* phone in hero */
+  .hero-phone{margin:52px auto 0;max-width:280px}
+  .phone{background:#fff;padding:10px;border-radius:34px;box-shadow:0 24px 60px rgba(16,24,40,.18)}
+  .phone-in{background:#0B1220;border-radius:26px;overflow:hidden;aspect-ratio:9/16;display:flex;align-items:center;justify-content:center;position:relative;background-image:
+    radial-gradient(300px 220px at 50% 0,rgba(26,115,232,.30),transparent 65%),
+    radial-gradient(260px 200px at 80% 100%,rgba(7,243,171,.20),transparent 60%)}
+  .phone-in video{width:100%;height:100%;object-fit:cover;display:block}
+  .vidph{text-align:center;padding:24px}
+  .vplay{width:62px;height:62px;border-radius:50%;background:rgba(255,255,255,.10);border:1.5px solid rgba(255,255,255,.75);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;backdrop-filter:blur(4px)}
+  .vplay svg{width:20px;height:20px;fill:#fff;margin-left:3px}
+  .vidph b{display:block;color:#EAF1F8;font-size:15px;font-weight:600;letter-spacing:-.01em}
+  .vidph span{display:block;color:rgba(234,241,248,.55);font-size:12.5px;margin-top:6px;font-weight:400}
+  .herocap{margin-top:16px;font-size:13.5px;color:#2A3648;opacity:.85}
+
+  /* stats */
+  .stats{background:linear-gradient(90deg,rgba(26,115,232,.05),rgba(7,243,171,.06)),#fff;border-bottom:1px solid var(--line)}
+  .stats .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding-top:36px;padding-bottom:36px}
+  .stat{text-align:center;padding:8px 12px}
+  .stat b{display:block;font-size:24px;font-weight:700;color:var(--blue);letter-spacing:-.02em}
+  .stat span{font-size:13px;color:var(--mut);display:block;margin-top:4px;line-height:1.45}
+
+  /* sections */
+  section{padding:76px 0}
+  .ey{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--green-d);margin-bottom:14px;display:block}
+  h2{font-size:clamp(28px,3.8vw,40px);font-weight:700;letter-spacing:-.02em;color:var(--blue);line-height:1.18;max-width:760px}
+  .band h2,.finalband h2{color:var(--ink)}
+  .sub{font-size:16.5px;color:var(--body);margin-top:14px;max-width:660px;line-height:1.75}
+  .center{text-align:center}
+  .center h2,.center .sub{margin-left:auto;margin-right:auto}
+
+  /* flat gray cards (site style) */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:48px}
+  .fcard{background:linear-gradient(135deg,rgba(26,115,232,.06) 0%,rgba(123,218,243,.08) 45%,rgba(7,243,171,.09) 100%),#fff;border-radius:18px;padding:34px 32px;border:1px solid rgba(123,218,243,.25);transition:transform .25s var(--ease),box-shadow .25s ease}
+  .fcard:hover{transform:translateY(-4px);box-shadow:var(--sh)}
+  .fcard.wide{grid-column:1/-1}
+  .fey{display:flex;align-items:center;gap:9px;font-size:13.5px;font-weight:500;color:var(--green-d);margin-bottom:12px}
+  .fey svg{width:18px;height:18px;stroke:var(--green-d);fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
+  .fcard h3{font-size:21px;font-weight:600;color:var(--ink);letter-spacing:-.015em;margin-bottom:10px}
+  .fcard p{font-size:14.5px;color:var(--body);line-height:1.75}
+
+  /* gradient band sections */
+  .band{background:var(--band);position:relative;overflow:hidden}
+  .band::before{content:"";position:absolute;inset:0;background:
+    radial-gradient(640px 360px at 50% -10%,rgba(255,255,255,.38),transparent 60%);pointer-events:none}
+  .band .wrap{position:relative}
+  .band .ey{color:#0A5B45}
+  .band .sub{color:#2A3648}
+
+  /* verticals */
+  .verts{display:flex;flex-wrap:wrap;gap:12px;margin-top:40px;justify-content:center}
+  .vert{display:inline-flex;align-items:center;gap:10px;font-size:14.5px;font-weight:500;color:var(--ink);background:#fff;border-radius:999px;padding:13px 24px;box-shadow:0 4px 16px rgba(16,24,40,.08);transition:transform .2s var(--ease),box-shadow .2s ease}
+  .vert:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(16,24,40,.12)}
+  .vert::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--grad)}
+  .vertnote{font-size:15px;color:#2A3648;margin:30px auto 0;max-width:680px;line-height:1.75;text-align:center}
+
+  /* calculator */
+  .calcbox{background:linear-gradient(135deg,rgba(26,115,232,.06) 0%,rgba(123,218,243,.08) 45%,rgba(7,243,171,.09) 100%),#fff;border:1px solid rgba(123,218,243,.25);border-radius:22px;padding:42px;margin-top:48px;display:grid;grid-template-columns:1.05fr .95fr;gap:42px;align-items:center}
+  .field{margin-bottom:20px}
+  .field label{display:block;font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);margin-bottom:8px}
+  .field input{width:100%;background:#fff;border:1px solid var(--line);border-radius:12px;color:var(--ink);font-size:16px;font-family:inherit;padding:13px 16px;outline:none;transition:border-color .18s ease,box-shadow .18s ease}
+  .field input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(26,115,232,.12)}
+  .result{text-align:center;padding:34px 22px;border-radius:18px;background:#fff;box-shadow:0 4px 20px rgba(16,24,40,.06)}
+  .result .lab{font-size:12.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--mut)}
+  .result .val{font-size:clamp(36px,5vw,50px);font-weight:700;color:var(--green-d);letter-spacing:-.02em;margin:10px 0 6px;font-variant-numeric:tabular-nums}
+  .result p{font-size:13px;color:var(--mut);line-height:1.55}
+
+  /* steps */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:48px}
+  .stepc{background:var(--gray);border-radius:18px;padding:34px 30px;transition:transform .25s var(--ease),box-shadow .25s ease}
+  .stepc:hover{transform:translateY(-4px);box-shadow:var(--sh)}
+  .stepc .n{width:40px;height:40px;border-radius:50%;background:var(--grad);color:#fff;font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+  .stepc h3{font-size:19px;font-weight:600;color:var(--ink);margin-bottom:10px;letter-spacing:-.015em}
+  .stepc p{font-size:14.5px;color:var(--body);line-height:1.75}
+
+
+
+  /* quotes on band */
+
+  /* faq */
+
+  /* final band */
+  .finalband{background:var(--band);position:relative;overflow:hidden;text-align:center}
+  .finalband::before{content:"";position:absolute;inset:0;background:radial-gradient(640px 360px at 50% -10%,rgba(255,255,255,.4),transparent 60%);pointer-events:none}
+  .finalband .wrap{position:relative}
+  .finalband h2{margin:0 auto}
+  .finalband .sub{margin:16px auto 0;color:#2A3648}
+  .finalband .btn{margin-top:32px}
+  .finalband .micro{margin-top:16px}
+
+  footer{background:linear-gradient(90deg,rgba(123,218,243,.14),rgba(138,244,171,.16)),#fff;padding:38px 0 46px}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
+  footer .fl{font-size:14px;color:var(--mut)}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion: reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+  @media (max-width:860px){
+    .grid2,.steps,.quotes{grid-template-columns:1fr}
+    .stepline{flex-direction:column;align-items:center;gap:14px}
+    .calcbox{grid-template-columns:1fr;padding:28px}
+    .stats .wrap{grid-template-columns:1fr 1fr;gap:20px}
+    section{padding:68px 0}
+    .hero{padding:130px 0 70px}
+    .navzone{top:10px;padding:0 12px}
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="qgrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1A73E8"/><stop offset="1" stop-color="#07F3AB"/></linearGradient><symbol id="senco-logo" viewBox="0 0 3308 970"><path fill="#07F3AB" d="M 3057.73 238.499 C 3120.83 237.691 3179.5 251.895 3227.41 293.695 C 3367.95 416.318 3316.73 670.648 3126.32 707.969 C 3109.56 711.252 3096.53 712.708 3079.88 714 C 3012.84 714.337 2955.25 701.831 2903.52 655.366 C 2791.86 555.081 2804.33 352.481 2934.92 273.587 C 2974.38 249.744 3012.15 240.754 3057.73 238.499 z M 3083.24 606.766 C 3226.49 587.038 3215.5 330.957 3053.77 345.32 C 2903.94 364.76 2922.5 626.577 3083.24 606.766 z"/><path fill="#07F3AB" d="M 1593.75 238.499 C 1596.83 238.457 1599.92 238.437 1603.01 238.44 C 1746.5 238.67 1830.7 350.045 1830.15 485.728 C 1830.11 495.159 1830.19 504.719 1830.17 514.168 L 1493.39 514.168 C 1497.84 540.063 1506.53 560.83 1524.67 580.271 C 1579.7 639.255 1690.02 625.929 1744.81 573.852 L 1759.18 594.977 C 1771.9 613.746 1784.72 632.444 1797.64 651.071 C 1754.39 691.233 1691.02 709.73 1632.95 713.419 C 1564.79 718.135 1496.09 700.909 1443.95 655.053 C 1348.46 571.058 1343.99 407.368 1428.33 314.065 C 1472.98 264.672 1528.18 242.281 1593.75 238.499 z M 1491.44 433.49 L 1605.5 433.49 L 1714.7 433.49 C 1711.59 404.314 1701.62 380.003 1679.65 359.733 C 1661.52 342.998 1626.33 330.408 1601.76 333.444 C 1537.91 335.145 1502.86 372.603 1491.44 433.49 z"/><path fill="#07F3AB" d="M 2162.73 238.499 C 2164.6 238.466 2166.47 238.447 2168.34 238.442 C 2241.25 238.276 2299.39 267.261 2314.18 343.263 C 2318.71 366.525 2317.9 386.803 2317.88 410.211 L 2317.85 473.57 L 2317.84 702.836 L 2198.49 702.836 L 2198.48 506.982 C 2198.48 474.881 2200.09 439.23 2196.97 407.584 C 2192.99 367.164 2162.96 346.185 2123.97 344.833 C 2086.43 343.531 2056.68 354.023 2028.5 379.699 C 2021.93 386.267 2018.01 390.604 2012.17 397.831 L 2012.17 702.836 L 1892.83 702.836 L 1892.83 249.832 L 2012.17 249.832 L 2012.17 308.47 C 2012.92 307.553 2013.69 306.652 2014.49 305.768 C 2053.49 262.284 2105.23 241.608 2162.73 238.499 z"/><path fill="#07F3AB" d="M 1125.73 238.499 C 1198.64 237.997 1259.24 254.223 1317.37 300.384 L 1270.4 382.195 C 1237.56 348.669 1187.89 330.985 1141.52 329.728 C 1118.94 329.116 1092.28 331.763 1075.07 348.211 C 1068.22 354.75 1065.42 361.906 1065.06 371.311 C 1063.59 409.532 1141.14 416.985 1168.76 423.774 C 1185.93 427.998 1202.75 430.481 1221.2 436.482 C 1249.83 445.338 1278.61 457.987 1299.95 479.755 C 1347.49 528.27 1343.59 616.126 1294.38 662.251 C 1245.04 708.507 1182.14 714.692 1118.31 713.813 C 1044.58 705.97 993.783 693.706 934.361 643.952 C 948.775 618.129 970.233 585.614 986.14 559.828 C 986.564 560.255 986.996 560.674 987.436 561.084 C 1026.46 597.679 1097.99 623.772 1151.03 621.734 C 1180.92 620.585 1221.24 610.766 1218.39 573.403 C 1215.34 533.527 1143.29 527.403 1113.11 519.962 C 1095.6 515.647 1079.06 513.64 1061.92 508.085 C 1034.69 500.224 1007.48 489.164 986.09 470.076 C 936.401 425.738 938.588 342.266 983.164 295.007 C 1021.75 254.098 1071.58 241.233 1125.73 238.499 z"/><path fill="#07F3AB" d="M 2613.74 238.499 C 2692.04 237.611 2753.54 257.264 2802.83 320.881 C 2778.2 344.965 2750.08 369.835 2724.71 393.628 C 2718.4 384.451 2710.81 376.223 2702.17 369.195 C 2677.49 349.223 2644.72 341.549 2613.69 345.458 C 2453.73 365.607 2478.35 627.166 2644.48 606.961 C 2679.58 602.692 2703.38 586.454 2724.75 559.049 L 2759.68 591.387 L 2802.79 631.358 C 2730.57 737.684 2548.52 737.732 2458.43 654.501 C 2328.6 534.55 2370.8 296.001 2548.72 248.559 C 2571.93 242.373 2589.96 239.762 2613.74 238.499 z"/><path fill="#07F3AB" d="M 353.558 0 L 383.452 0 C 386.045 0.616751 390.701 1.1178 393.435 1.28165 C 433.049 3.6557 463.118 16.4301 497.95 35.0444 C 523.124 48.4974 550.201 61.3961 575.298 76.2251 C 581.061 73.4527 586.492 71.1609 592.687 69.4621 C 614.185 63.4646 637.19 66.3467 656.544 77.4622 C 675.855 88.6076 689.93 106.988 695.654 128.538 C 701.338 150.09 698.224 173.018 686.997 192.273 C 675.668 211.345 657.259 225.165 635.784 230.722 C 614.131 236.332 591.131 232.977 571.983 221.416 C 548.975 207.621 538.704 188.823 532.463 163.661 C 510.826 152.599 488.582 141.625 466.595 130.864 C 427.333 111.649 392.916 88.6013 347.07 99.4405 C 334.111 102.504 316.566 112.839 304.447 119.255 L 253.613 146.311 C 229.181 159.314 204.823 172.455 180.539 185.734 C 121.291 218.244 117.296 214.652 117.418 282.988 L 117.526 347.178 L 117.486 418.414 C 117.341 461.777 111.543 505.642 156.313 530.159 C 212.657 561.013 269.183 591.606 325.962 621.727 C 345.542 632.114 370.636 653.645 387.978 625.744 C 395.468 613.693 394.275 587.864 390.92 574.157 C 382.472 542.294 345.92 536.633 321.428 522.066 C 279.468 496.929 240.782 486.415 225.589 435.167 C 223.317 427.595 221.841 419.807 221.185 411.929 C 220.201 399.7 221.318 324.287 223.208 312.909 C 224.459 305.084 227.035 297.529 230.824 290.568 C 241.746 270.589 260.31 258.737 278.343 246.106 C 307.274 225.842 339.02 213.09 372.618 231.783 L 537.396 325.44 C 556.852 336.502 576.25 347.667 595.589 358.932 C 632.368 380.375 666.97 399.275 679.492 443.408 C 681.353 449.953 682.459 456.689 682.788 463.485 C 683.644 479.927 683.042 501.344 683.008 518.148 L 682.967 613.343 L 683.026 690.624 C 683.045 740.672 684.051 798.627 635.047 829.367 C 623.164 836.82 610.486 843.57 598.372 850.77 C 554.815 877.014 510.482 901.948 465.433 925.539 C 441.025 938.147 409.034 954.227 382.658 961.836 C 284.745 990.081 207.651 935.514 126.253 889.586 C 119.384 893.335 113.464 895.993 105.847 898.053 C 84.2403 903.857 61.2078 900.736 41.9251 889.391 C 22.8866 878.335 9.06808 860.116 3.55489 838.801 C -2.12272 817.152 1.08829 794.132 12.4734 774.862 C 23.6855 755.859 42 742.1 63.3735 736.623 C 112.502 724.034 154.344 754.202 166.383 801.885 C 188.456 813.402 211.169 825.958 233.097 837.674 C 268.474 857.077 296.994 874.991 339.297 869.866 C 367.628 866.434 377.484 860.347 401.391 846.803 L 446.312 821.288 C 469.869 807.885 554.138 762.854 567.188 746.647 C 575.834 736.031 581.57 723.349 583.834 709.847 C 585.914 697.9 585.179 677.867 585.185 664.891 L 585.214 592.771 L 585.221 525.024 C 585.222 514.429 586.577 484.133 581.296 476.162 C 568.79 457.285 542.376 444.06 522.952 432.757 L 460.859 396.606 L 392.233 356.401 C 379.475 348.903 366.89 341.29 353.807 334.314 C 342.234 328.143 330.673 328.567 322.434 339.878 C 312.944 352.827 316.73 370.382 315.792 384.973 C 313.468 414.593 341.129 424.332 362.884 435.085 C 389.53 448.255 416.318 463.506 441.036 479.909 C 463.703 494.952 477.943 521.002 481.235 547.838 C 484.909 577.789 486.689 629.149 479.617 658.309 C 477.071 669.131 472.477 679.365 466.082 688.459 C 448.098 713.682 400.589 738.1 370.432 745.591 C 349.108 750.887 320.308 730.964 301.374 720.642 L 225.664 679.217 C 187.276 658.162 149.011 636.886 110.87 615.388 C 93.5185 605.568 70.477 592.764 54.3145 582.011 C 35.6032 567.513 24.6568 543.554 21.5911 520.426 C 19.2131 502.485 20.0115 482.112 20.0141 463.834 L 19.9411 375.05 L 19.8612 264.865 C 19.8986 246.874 18.8203 220.258 21.4875 203.035 C 31.8363 136.206 115.783 106.686 168.291 78.0603 C 215.907 52.1019 263.962 28.2512 313.909 8.08881 C 325.125 3.56128 341.669 1.75215 353.558 0 z"/></symbol><symbol id="senco-smark" viewBox="0 0 700 970"><path fill="#07F3AB" d="M 353.558 0 L 383.452 0 C 386.045 0.616751 390.701 1.1178 393.435 1.28165 C 433.049 3.6557 463.118 16.4301 497.95 35.0444 C 523.124 48.4974 550.201 61.3961 575.298 76.2251 C 581.061 73.4527 586.492 71.1609 592.687 69.4621 C 614.185 63.4646 637.19 66.3467 656.544 77.4622 C 675.855 88.6076 689.93 106.988 695.654 128.538 C 701.338 150.09 698.224 173.018 686.997 192.273 C 675.668 211.345 657.259 225.165 635.784 230.722 C 614.131 236.332 591.131 232.977 571.983 221.416 C 548.975 207.621 538.704 188.823 532.463 163.661 C 510.826 152.599 488.582 141.625 466.595 130.864 C 427.333 111.649 392.916 88.6013 347.07 99.4405 C 334.111 102.504 316.566 112.839 304.447 119.255 L 253.613 146.311 C 229.181 159.314 204.823 172.455 180.539 185.734 C 121.291 218.244 117.296 214.652 117.418 282.988 L 117.526 347.178 L 117.486 418.414 C 117.341 461.777 111.543 505.642 156.313 530.159 C 212.657 561.013 269.183 591.606 325.962 621.727 C 345.542 632.114 370.636 653.645 387.978 625.744 C 395.468 613.693 394.275 587.864 390.92 574.157 C 382.472 542.294 345.92 536.633 321.428 522.066 C 279.468 496.929 240.782 486.415 225.589 435.167 C 223.317 427.595 221.841 419.807 221.185 411.929 C 220.201 399.7 221.318 324.287 223.208 312.909 C 224.459 305.084 227.035 297.529 230.824 290.568 C 241.746 270.589 260.31 258.737 278.343 246.106 C 307.274 225.842 339.02 213.09 372.618 231.783 L 537.396 325.44 C 556.852 336.502 576.25 347.667 595.589 358.932 C 632.368 380.375 666.97 399.275 679.492 443.408 C 681.353 449.953 682.459 456.689 682.788 463.485 C 683.644 479.927 683.042 501.344 683.008 518.148 L 682.967 613.343 L 683.026 690.624 C 683.045 740.672 684.051 798.627 635.047 829.367 C 623.164 836.82 610.486 843.57 598.372 850.77 C 554.815 877.014 510.482 901.948 465.433 925.539 C 441.025 938.147 409.034 954.227 382.658 961.836 C 284.745 990.081 207.651 935.514 126.253 889.586 C 119.384 893.335 113.464 895.993 105.847 898.053 C 84.2403 903.857 61.2078 900.736 41.9251 889.391 C 22.8866 878.335 9.06808 860.116 3.55489 838.801 C -2.12272 817.152 1.08829 794.132 12.4734 774.862 C 23.6855 755.859 42 742.1 63.3735 736.623 C 112.502 724.034 154.344 754.202 166.383 801.885 C 188.456 813.402 211.169 825.958 233.097 837.674 C 268.474 857.077 296.994 874.991 339.297 869.866 C 367.628 866.434 377.484 860.347 401.391 846.803 L 446.312 821.288 C 469.869 807.885 554.138 762.854 567.188 746.647 C 575.834 736.031 581.57 723.349 583.834 709.847 C 585.914 697.9 585.179 677.867 585.185 664.891 L 585.214 592.771 L 585.221 525.024 C 585.222 514.429 586.577 484.133 581.296 476.162 C 568.79 457.285 542.376 444.06 522.952 432.757 L 460.859 396.606 L 392.233 356.401 C 379.475 348.903 366.89 341.29 353.807 334.314 C 342.234 328.143 330.673 328.567 322.434 339.878 C 312.944 352.827 316.73 370.382 315.792 384.973 C 313.468 414.593 341.129 424.332 362.884 435.085 C 389.53 448.255 416.318 463.506 441.036 479.909 C 463.703 494.952 477.943 521.002 481.235 547.838 C 484.909 577.789 486.689 629.149 479.617 658.309 C 477.071 669.131 472.477 679.365 466.082 688.459 C 448.098 713.682 400.589 738.1 370.432 745.591 C 349.108 750.887 320.308 730.964 301.374 720.642 L 225.664 679.217 C 187.276 658.162 149.011 636.886 110.87 615.388 C 93.5185 605.568 70.477 592.764 54.3145 582.011 C 35.6032 567.513 24.6568 543.554 21.5911 520.426 C 19.2131 502.485 20.0115 482.112 20.0141 463.834 L 19.9411 375.05 L 19.8612 264.865 C 19.8986 246.874 18.8203 220.258 21.4875 203.035 C 31.8363 136.206 115.783 106.686 168.291 78.0603 C 215.907 52.1019 263.962 28.2512 313.909 8.08881 C 325.125 3.56128 341.669 1.75215 353.558 0 z"/></symbol></defs></svg>
+
+<div class="navzone">
+  <div class="navbar">
+    <a class="logo" href="#" aria-label="Senco"><svg class="senco-mark" viewBox="0 0 3308 970"><use href="#senco-logo"/></svg></a>
+    <a class="navcta" href="#review">Get my free teardown &gt;</a>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker reveal">Payments for high risk. That's the whole company.</div>
+    <h1 class="reveal">You're not high risk.<br>You're easy to overcharge.</h1>
+    <p class="lead reveal">$20M+ a quarter for brands most banks won't touch. We find the padding. You see everything.</p>
+    <div class="cta-row reveal">
+      <a class="btn primary" href="#calc">See what you're losing &gt;</a>
+      <a class="btn ghost" href="#review">Start with three numbers</a>
+    </div>
+    <p class="micro reveal">Free. No signup, no call, no commitment. Your numbers stay yours.</p>
+    <div class="hero-phone reveal">
+      <div class="phone">
+        <div class="phone-in">
+          <video controls playsinline preload="metadata" poster="raffaele-intro-poster.jpg">
+            <source src="raffaele-intro.mp4" type="video/mp4">
+          </video>
+      </div>
+      <p class="herocap">Raffaele, co-founder</p>
+    </div>
+  </div>
+</header>
+
+<div class="stats">
+  <div class="wrap">
+    <div class="stat reveal"><b>$90M+</b><span>yearly run rate we process</span></div>
+    <div class="stat reveal"><b>High risk only</b><span>the only merchants we serve</span></div>
+    <div class="stat reveal"><b>Within the hour</b><span>usual statement review turnaround</span></div>
+    <div class="stat reveal"><b>Zero switching</b><span>to find out what you're losing</span></div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <span class="ey reveal">Sound familiar?</span>
+    <h2 class="reveal">You've lived at least two of these</h2>
+    <p class="sub reveal">None of them are your fault. Most of them are fixable.</p>
+    <div class="grid2">
+      <div class="fcard reveal">
+        <div class="fey"><svg viewBox="0 0 24 24"><path d="M18.36 6.64a9 9 0 1 1-12.72 0"/><path d="M12 2v10"/></svg>No warning, no human to call</div>
+        <h3>Your MID died overnight</h3>
+        <p>One email. Account closed, funds frozen. You rebuilt your checkout in a weekend and swore never again. Then it happened again.</p>
+      </div>
+      <div class="fcard reveal">
+        <div class="fey"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Your money, working for them</div>
+        <h3>The reserve that never shrinks</h3>
+        <p>A 10 percent rolling reserve, "temporary." That was two years ago. It's your money, sitting in someone else's account, earning them interest.</p>
+      </div>
+      <div class="fcard reveal">
+        <div class="fey"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M17 8l5 5M22 8l-5 5"/></svg>The label became the excuse</div>
+        <h3>Set up, then forgotten</h3>
+        <p>They signed you and never looked at your account again. Your volume grew, and more volume should mean lower rates. But every time you ask, the answer is the same: "you're high risk, we can't lower it."</p>
+      </div>
+      <div class="fcard reveal">
+        <div class="fey"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/><path d="M9 15l2 2 4-4"/></svg>Real buyers, turned away</div>
+        <h3>Real customers, declined</h3>
+        <p>Many high-risk brands approve only 55 to 65 percent of payments. The rest are real buyers with real cards, turned away at your checkout.</p>
+      </div>
+      <div class="fcard wide reveal">
+        <div class="fey"><svg viewBox="0 0 24 24"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>New rules, and most merchants have never heard the name</div>
+        <h3>VAMP fees for someone else's mistakes</h3>
+        <p>Visa now grades your processor's entire portfolio on fraud and disputes. When other merchants on the same processor push the ratio over the line, the extra fees, the tighter rules, and the deeper reserves roll downhill onto everyone, including you. Whose portfolio you sit in now decides what you pay. That's why placement is half the game.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band center">
+  <div class="wrap">
+    <span class="ey reveal">Where we work</span>
+    <h2 class="reveal">The verticals we actually live in</h2>
+    <div class="verts reveal">
+      <div class="vert">Adult &amp; creator platforms</div>
+      <div class="vert">Vape &amp; e-cig</div>
+      <div class="vert">Kratom &amp; botanicals</div>
+      <div class="vert">Peptides &amp; research</div>
+      <div class="vert">Telehealth</div>
+      <div class="vert">Supplements &amp; nutra</div>
+      <div class="vert">CBD &amp; hemp</div>
+      <div class="vert">Coaching &amp; digital products</div>
+    </div>
+    <p class="vertnote reveal">If your vertical is on this list, we already know your banks, your descriptors, your reserve games, and what a normal approval rate looks like for you. You won't spend the first call explaining your own industry.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="ey reveal">Why merchants trust us with this</span>
+    <h2 class="reveal">Operators, not a sales floor</h2>
+    <div class="grid2">
+      <div class="fcard reveal">
+        <h3>We've been on your side of the statement.</h3>
+        <p>My co-founder runs a DTC brand in a restricted category. We know what a frozen payout does to a Friday.</p>
+      </div>
+      <div class="fcard reveal">
+        <h3>We place you, we don't push you.</h3>
+        <p>We hold relationships with multiple high-risk processors and banks. You get routed to the one whose bank accepts your vertical in writing, not the one that pays us the most.</p>
+      </div>
+      <div class="fcard reveal">
+        <h3>Numbers first, always.</h3>
+        <p>Every claim we make shows up in writing with the math behind it. If we can't beat your current setup, we say so and you keep it.</p>
+      </div>
+      <div class="fcard reveal">
+        <h3>A human answers.</h3>
+        <p>You will never file a ticket to reach the person who handles your money.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="calc" style="padding-top:0">
+  <div class="wrap">
+    <span class="ey reveal">The quick math</span>
+    <h2 class="reveal">See what it might be costing you</h2>
+    <p class="sub reveal">Put a number on it. Rough in five seconds here, exact from your statement.</p>
+    <div class="calcbox reveal">
+      <div>
+        <div class="field">
+          <label for="rev">Your monthly online revenue ($)</label>
+          <input type="number" id="rev" placeholder="250000" inputmode="numeric">
+        </div>
+        <div class="field">
+          <label for="appr">Your approval rate now (%)</label>
+          <input type="number" id="appr" placeholder="62" inputmode="numeric">
+        </div>
+        <div class="field">
+          <label for="cb">Chargeback rate now (%) <span style="text-transform:none;font-weight:400">optional</span></label>
+          <input type="number" id="cb" placeholder="1.5" inputmode="numeric">
+        </div>
+      </div>
+      <div class="result">
+        <div class="lab">Sales you may recover each month</div>
+        <div class="val" id="calcout">$0</div>
+        <p>Lifting approval toward 75 percent is a common result. The gap is worth a closer look.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="finalband" id="review">
+  <div class="wrap">
+    <h2 class="reveal">Start without sending a single document.</h2>
+    <p class="sub reveal">Three numbers get you moving: monthly volume, vertical, and your biggest payments headache. We come back with what we can already tell you, and you decide if the full teardown is worth a statement.</p>
+    <div class="cta-row reveal">
+      <a class="btn blue" href="mailto:raffaele@senco.ai?subject=Fill%20my%20blanks&body=Monthly%20online%20volume%3A%20%0AVertical%3A%20%0ABiggest%20payments%20headache%3A%20">Start with three numbers &gt;</a>
+      <a class="btn ghost" href="mailto:raffaele@senco.ai?subject=Statement%20teardown">I'm ready, here's my statement</a>
+    </div>
+    <p class="micro reveal">raffaele@senco.ai · both go to a founder, not a queue</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <a class="logo" href="#" aria-label="Senco"><svg class="senco-mark" style="height:20px" viewBox="0 0 3308 970"><use href="#senco-logo"/></svg></a>
+    <div class="fl">A smarter way to process payments.</div>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver(es => {
+    es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:.12});
+  document.querySelectorAll('.reveal').forEach((el,i) => {
+    el.style.transitionDelay = (i % 4) * 60 + 'ms';
+    io.observe(el);
+  });
+
+  const rev = document.getElementById('rev'), appr = document.getElementById('appr'),
+        cb = document.getElementById('cb'), out = document.getElementById('calcout');
+  let cur = 0, raf;
+  function target(){
+    const r = parseFloat(rev.value)||0, a = parseFloat(appr.value)||0, c = parseFloat(cb.value)||0;
+    let g = 0;
+    if (r>0 && a>0 && a<75) g += r*((75-a)/a);
+    if (r>0 && c>1) g += r*((c-1)/100)*1.5;
+    return Math.round(g);
+  }
+  function tick(to){
+    cur += (to-cur)*0.18;
+    if (Math.abs(to-cur) < 1) cur = to;
+    out.textContent = '$' + Math.round(cur).toLocaleString();
+    if (cur !== to) raf = requestAnimationFrame(() => tick(to));
+  }
+  function calc(){ cancelAnimationFrame(raf); tick(target()); }
+  [rev,appr,cb].forEach(i => i.addEventListener('input', calc));
+
+  document.querySelectorAll('.qa button').forEach(b => {
+    b.addEventListener('click', () => b.parentElement.classList.toggle('open'));
+  });
+</script>
+
+</body>
+</html>
