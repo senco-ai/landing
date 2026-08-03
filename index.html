@@ -325,7 +325,7 @@
       <div>
         <div class="field">
           <label for="rev">Your monthly online revenue ($)</label>
-          <input type="number" id="rev" placeholder="250000" inputmode="numeric">
+          <input type="text" id="rev" placeholder="$250,000" inputmode="numeric">
         </div>
         <div class="field">
           <label for="appr">Your approval rate now (%)</label>
@@ -396,11 +396,21 @@
     io.observe(el);
   });
 
+  // live money formatting
+  function moneyfy(el){
+    el.addEventListener('input', () => {
+      const d = el.value.replace(/[^0-9]/g,'');
+      el.value = d ? '$' + Number(d).toLocaleString('en-US') : '';
+    });
+  }
   const rev = document.getElementById('rev'), appr = document.getElementById('appr'),
         cb = document.getElementById('cb'), out = document.getElementById('calcout');
+  moneyfy(rev);
+  const lfv = document.getElementById('lf-volume');
+  if (lfv) moneyfy(lfv);
   let cur = 0, raf;
   function target(){
-    const r = parseFloat(rev.value)||0, a = parseFloat(appr.value)||0, c = parseFloat(cb.value)||0;
+    const r = parseFloat(rev.value.replace(/[^0-9.]/g,''))||0, a = parseFloat(appr.value)||0, c = parseFloat(cb.value)||0;
     let g = 0;
     if (r>0 && a>0 && a<75) g += r*((75-a)/a);
     if (r>0 && c>1) g += r*((c-1)/100)*1.5;
