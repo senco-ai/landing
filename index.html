@@ -80,6 +80,10 @@
   .herocap{margin-top:16px;font-size:13.5px;color:#2A3648;opacity:.85}
   .vidtag{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--ink);background:rgba(255,255,255,.78);border:1px solid rgba(255,255,255,.9);border-radius:999px;padding:8px 17px;margin-bottom:16px;backdrop-filter:blur(6px)}
   .vidtag::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--green-d)}
+  .playover{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,rgba(11,18,32,0) 40%,rgba(11,18,32,.25));border:none;cursor:pointer;z-index:2;padding:0}
+  .pobtn{width:78px;height:78px;border-radius:50%;background:rgba(255,255,255,.24);border:2px solid rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px);transition:transform .2s var(--ease),background .2s ease;box-shadow:0 8px 30px rgba(11,18,32,.35)}
+  .playover:hover .pobtn{transform:scale(1.1);background:rgba(255,255,255,.38)}
+  .pobtn svg{width:26px;height:26px;fill:#fff;margin-left:4px}
 
   /* stats */
   .stats{background:linear-gradient(90deg,rgba(26,115,232,.05),rgba(7,243,171,.06)),#fff;border-bottom:1px solid var(--line)}
@@ -213,9 +217,12 @@
       <div class="vidtag">A quick note from the co-founder</div>
       <div class="phone">
         <div class="phone-in">
-          <video controls playsinline preload="metadata" poster="raffaele-intro-poster.jpg">
+          <video playsinline preload="metadata" poster="raffaele-intro-poster.jpg">
             <source src="raffaele-intro.mp4" type="video/mp4">
           </video>
+          <button class="playover" id="playover" aria-label="Play the founder video">
+            <span class="pobtn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+          </button>
       </div>
       <p class="herocap">Raffaele, co-founder</p>
     </div>
@@ -415,6 +422,18 @@
       document.getElementById('lf-ok').style.display='block';
       f.scrollIntoView({block:'center'}); }
   }
+  // big play button
+  const po = document.getElementById('playover');
+  const pv = document.querySelector('.phone-in video');
+  if (po && pv) {
+    po.addEventListener('click', () => {
+      pv.setAttribute('controls','');
+      pv.play();
+      po.style.display = 'none';
+    });
+    pv.addEventListener('ended', () => { pv.removeAttribute('controls'); po.style.display = 'flex'; });
+  }
+
   // click-to-copy email
   const cm = document.getElementById('copymail');
   if (cm) cm.addEventListener('click', () => {
