@@ -145,6 +145,18 @@
 
   /* faq */
 
+  /* lead form */
+  .lead-form{max-width:640px;margin:36px auto 0;background:#fff;border-radius:20px;padding:30px;box-shadow:0 18px 50px rgba(16,24,40,.14);text-align:left}
+  .lf-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+  .lf-field label{display:block;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);margin-bottom:7px}
+  .lf-field input{width:100%;background:#fff;border:1px solid var(--line);border-radius:11px;color:var(--ink);font-size:15.5px;font-family:inherit;padding:12px 14px;outline:none;transition:border-color .18s ease,box-shadow .18s ease}
+  .lf-field input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(26,115,232,.12)}
+  .lf-btn{width:100%;border:none;cursor:pointer;font-family:inherit;margin-top:4px}
+  .lf-ok{display:none;margin-top:14px;font-size:14.5px;color:var(--green-d);font-weight:600;text-align:center}
+  .copymail{cursor:pointer;color:var(--ink);border-bottom:1px dashed var(--mut)}
+  .copied{display:none;margin-left:8px;font-size:12px;font-weight:700;color:var(--green-d);text-transform:uppercase;letter-spacing:.05em}
+  @media (max-width:640px){.lf-row{grid-template-columns:1fr}}
+
   /* final band */
   .finalband{background:var(--band);position:relative;overflow:hidden;text-align:center}
   .finalband::before{content:"";position:absolute;inset:0;background:radial-gradient(640px 360px at 50% -10%,rgba(255,255,255,.4),transparent 60%);pointer-events:none}
@@ -326,12 +338,35 @@
 <section class="finalband" id="review">
   <div class="wrap">
     <h2 class="reveal">Start without sending a single document.</h2>
-    <p class="sub reveal">Three numbers get you moving: monthly volume, vertical, and your biggest payments headache. We come back with what we can already tell you, and you decide if the full teardown is worth a statement.</p>
-    <div class="cta-row reveal">
-      <a class="btn blue" href="mailto:raffaele@senco.ai?subject=Fill%20my%20blanks&body=Monthly%20online%20volume%3A%20%0AVertical%3A%20%0ABiggest%20payments%20headache%3A%20">Start with three numbers &gt;</a>
-      <a class="btn ghost" href="mailto:raffaele@senco.ai?subject=Statement%20teardown">I'm ready, here's my statement</a>
-    </div>
-    <p class="micro reveal">raffaele@senco.ai · both go to a founder, not a queue</p>
+    <p class="sub reveal">Three numbers get you moving. We come back with what we can already tell you, and you decide if the full teardown is worth a statement.</p>
+    <form class="lead-form reveal" action="https://formsubmit.co/raffaele@senco.ai" method="POST">
+      <input type="hidden" name="_subject" value="Fill my blanks — sencopay.ai">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_next" value="https://sencopay.ai/?sent=1">
+      <div class="lf-row">
+        <div class="lf-field">
+          <label for="lf-email">Your email</label>
+          <input id="lf-email" name="email" type="email" required placeholder="you@yourbrand.com">
+        </div>
+        <div class="lf-field">
+          <label for="lf-volume">Monthly online volume</label>
+          <input id="lf-volume" name="monthly_volume" type="text" required placeholder="$250,000">
+        </div>
+      </div>
+      <div class="lf-row">
+        <div class="lf-field">
+          <label for="lf-vertical">Your vertical</label>
+          <input id="lf-vertical" name="vertical" type="text" required placeholder="Vape, CBD, peptides...">
+        </div>
+        <div class="lf-field">
+          <label for="lf-pain">Biggest payments headache</label>
+          <input id="lf-pain" name="headache" type="text" placeholder="Declines, reserve, fees...">
+        </div>
+      </div>
+      <button class="btn blue lf-btn" type="submit">Send my three numbers &gt;</button>
+      <p class="lf-ok" id="lf-ok">Got it. Your numbers are with Raffaele — answer usually within the hour.</p>
+    </form>
+    <p class="micro reveal" style="margin-top:26px">Ready with a statement? Email it to <b class="copymail" id="copymail" title="Click to copy">raffaele@senco.ai</b><span id="copied" class="copied">copied</span> · goes to a founder, not a queue</p>
   </div>
 </section>
 
@@ -370,8 +405,20 @@
   function calc(){ cancelAnimationFrame(raf); tick(target()); }
   [rev,appr,cb].forEach(i => i.addEventListener('input', calc));
 
-  document.querySelectorAll('.qa button').forEach(b => {
-    b.addEventListener('click', () => b.parentElement.classList.toggle('open'));
+  // form success state (after redirect back)
+  if (new URLSearchParams(location.search).has('sent')) {
+    const f = document.querySelector('.lead-form');
+    if (f) { f.querySelectorAll('.lf-row,.lf-btn').forEach(e => e.style.display='none');
+      document.getElementById('lf-ok').style.display='block';
+      f.scrollIntoView({block:'center'}); }
+  }
+  // click-to-copy email
+  const cm = document.getElementById('copymail');
+  if (cm) cm.addEventListener('click', () => {
+    navigator.clipboard.writeText('raffaele@senco.ai').then(() => {
+      const c = document.getElementById('copied');
+      c.style.display='inline'; setTimeout(() => c.style.display='none', 1600);
+    });
   });
 </script>
 
