@@ -78,9 +78,9 @@
   .vidph b{display:block;color:#EAF1F8;font-size:15px;font-weight:600;letter-spacing:-.01em}
   .vidph span{display:block;color:rgba(234,241,248,.55);font-size:12.5px;margin-top:6px;font-weight:400}
   .herocap{margin-top:16px;font-size:13.5px;color:#2A3648;opacity:.85}
-  .vidtag{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--ink);background:rgba(255,255,255,.78);border:1px solid rgba(255,255,255,.9);border-radius:999px;padding:8px 17px;margin-bottom:16px;backdrop-filter:blur(6px)}
+  .vidtag{display:inline-flex;align-items:center;gap:8px;white-space:nowrap;font-size:11.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--ink);background:rgba(255,255,255,.78);border:1px solid rgba(255,255,255,.9);border-radius:999px;padding:8px 17px;margin-bottom:16px;backdrop-filter:blur(6px)}
   .vidtag::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--green-d)}
-  .playover{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,rgba(11,18,32,0) 40%,rgba(11,18,32,.25));border:none;cursor:pointer;z-index:2;padding:0}
+  .playover{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;padding-bottom:22%;background:linear-gradient(180deg,rgba(11,18,32,0) 40%,rgba(11,18,32,.25));border:none;cursor:pointer;z-index:2;padding:0}
   .pobtn{width:78px;height:78px;border-radius:50%;background:rgba(255,255,255,.24);border:2px solid rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px);transition:transform .2s var(--ease),background .2s ease;box-shadow:0 8px 30px rgba(11,18,32,.35)}
   .playover:hover .pobtn{transform:scale(1.1);background:rgba(255,255,255,.38)}
   .pobtn svg{width:26px;height:26px;fill:#fff;margin-left:4px}
