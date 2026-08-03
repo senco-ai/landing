@@ -78,6 +78,8 @@
   .vidph b{display:block;color:#EAF1F8;font-size:15px;font-weight:600;letter-spacing:-.01em}
   .vidph span{display:block;color:rgba(234,241,248,.55);font-size:12.5px;margin-top:6px;font-weight:400}
   .herocap{margin-top:16px;font-size:13.5px;color:#2A3648;opacity:.85}
+  .vidtag{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--ink);background:rgba(255,255,255,.78);border:1px solid rgba(255,255,255,.9);border-radius:999px;padding:8px 17px;margin-bottom:16px;backdrop-filter:blur(6px)}
+  .vidtag::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--green-d)}
 
   /* stats */
   .stats{background:linear-gradient(90deg,rgba(26,115,232,.05),rgba(7,243,171,.06)),#fff;border-bottom:1px solid var(--line)}
@@ -208,6 +210,7 @@
     </div>
     <p class="micro reveal">Free. No signup, no call, no commitment. Your numbers stay yours.</p>
     <div class="hero-phone reveal">
+      <div class="vidtag">A quick note from the co-founder</div>
       <div class="phone">
         <div class="phone-in">
           <video controls playsinline preload="metadata" poster="raffaele-intro-poster.jpg">
