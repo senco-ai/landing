@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Senco 360 | your whole brand on one screen</title>
+<style>
+  :root{
+    --blue:#1A73E8; --green:#07F3AB; --green2:#8AF4AB; --green-ink:#07a877;
+    --ink:#0c1f2c; --muted:#5c7184; --soft:#7d8fa0;
+    --line:#e6eef4; --bg:#ffffff; --bg2:#f4f8fb; --card:#ffffff;
+    --grad:linear-gradient(120deg,#1A73E8 0%,#07F3AB 100%);
+    --shadow:0 10px 34px rgba(12,40,70,.08);
+    --radius:18px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 24px}
+  .narrow{max-width:820px}
+  a{color:inherit}
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.85);backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid var(--line)}
+  nav .row{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand img{height:24px;display:block}
+  .brand .b360{font-weight:800;font-size:15px;letter-spacing:.02em;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--grad);color:#fff;font-weight:700;border:none;border-radius:12px;padding:12px 20px;font-size:15px;cursor:pointer;text-decoration:none;box-shadow:0 6px 18px rgba(19,168,102,.25);transition:transform .15s ease,box-shadow .15s ease}
+  .btn:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(19,168,102,.32)}
+  .btn.ghost{background:transparent;color:var(--ink);box-shadow:none;border:1px solid var(--line)}
+  .btn.lg{padding:15px 26px;font-size:16px}
+  .nav-btn{padding:9px 16px;font-size:14px}
+
+  .hero{position:relative;overflow:hidden;padding:76px 0 60px;text-align:center}
+  .hero:before{content:"";position:absolute;inset:0;background:radial-gradient(900px 420px at 50% -10%,rgba(23,137,212,.12),transparent 60%);z-index:-1}
+  .kicker{display:inline-block;font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.16em;color:var(--blue);background:#eaf3fb;border:1px solid #d8e9f7;padding:7px 14px;border-radius:999px;margin-bottom:22px}
+  h1{font-size:50px;line-height:1.08;letter-spacing:-.03em;margin:0 auto 20px;font-weight:850;max-width:780px}
+  h1 .hl{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lede{font-size:20px;color:var(--muted);max-width:640px;margin:0 auto 30px}
+  .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .micro{margin-top:18px;color:var(--soft);font-size:13.5px}
+  @media(max-width:680px){h1{font-size:34px}.lede{font-size:17px}}
+
+  /* HERO PRODUCT SHOT (mock, demo data) */
+  .hero-shot{max-width:860px;margin:44px auto 0;text-align:left;border-radius:20px;border:1px solid var(--line);box-shadow:0 24px 60px rgba(12,40,70,.14);overflow:hidden;background:#fff}
+  .hs-top{display:flex;align-items:center;gap:8px;padding:12px 18px;border-bottom:1px solid var(--line);background:var(--bg2)}
+  .hs-dot{width:10px;height:10px;border-radius:50%;background:#dde7ee}
+  .hs-title{margin-left:8px;font-size:13px;font-weight:700;color:var(--muted)}
+  .hs-body{padding:20px 22px}
+  .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  @media(max-width:680px){.tiles{grid-template-columns:repeat(2,1fr)}}
+  .tile{border:1px solid var(--line);border-radius:13px;padding:14px 15px;background:#fff}
+  .tile small{display:block;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--soft);margin-bottom:5px}
+  .tile b{font-size:21px;letter-spacing:-.02em}
+  .tile .up{color:var(--green-ink);font-size:12.5px;font-weight:700;margin-left:6px}
+  .tile .down{color:#c25b3f;font-size:12.5px;font-weight:700;margin-left:6px}
+  .hs-brief{margin-top:14px;border:1px solid var(--line);border-radius:13px;padding:14px 16px;background:linear-gradient(135deg,#f7fbff,#f2fdf8)}
+  .hs-brief .row2{display:flex;gap:10px;align-items:flex-start;margin:7px 0;font-size:14.5px}
+  .hs-brief .d{width:8px;height:8px;border-radius:50%;margin-top:7px;flex:0 0 auto}
+  .hs-brief b{font-weight:700}
+  .demo-note{text-align:center;color:var(--soft);font-size:12.5px;margin-top:10px}
+
+  .trust{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg2)}
+  .trust .wrap{display:flex;align-items:center;justify-content:center;gap:30px;flex-wrap:wrap;padding:18px 24px;color:var(--soft);font-size:14px;font-weight:600}
+  .trust b{color:var(--ink)}
+
+  section{padding:70px 0}
+  .ey{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--green-ink);margin:0 0 10px}
+  h2{font-size:32px;line-height:1.15;letter-spacing:-.02em;font-weight:820;margin:0 0 12px}
+  .sub{color:var(--muted);font-size:17px;margin:0 0 36px;max-width:640px}
+  .center{text-align:center}
+  .center .sub{margin-left:auto;margin-right:auto}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+
+  .stack{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+  .chip{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:9px 18px;font-size:14px;font-weight:650;color:var(--muted);box-shadow:var(--shadow)}
+
+  .feat{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:680px){.feat{grid-template-columns:1fr}}
+  .mini{padding:24px;border-radius:var(--radius);border:1px solid var(--line);background:var(--card);box-shadow:var(--shadow)}
+  .mini b{display:block;font-size:17px;margin-bottom:5px}
+  .mini p{margin:0;color:var(--muted);font-size:15px}
+
+  /* MOCK PRODUCT PANELS (demo data) */
+  .mock{border-radius:12px;border:1px solid var(--line);background:#fff;margin-bottom:16px;overflow:hidden}
+  .mock-h{padding:10px 14px;border-bottom:1px solid var(--line);background:var(--bg2);font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}
+  .mock-b{padding:14px}
+  .mrow{display:flex;align-items:center;gap:10px;margin:9px 0;font-size:13.5px}
+  .mrow .nm{flex:0 0 108px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bar{flex:1;height:8px;border-radius:99px;background:#eef4f9;overflow:hidden}
+  .bar i{display:block;height:100%;border-radius:99px}
+  .pill{flex:0 0 auto;font-size:11.5px;font-weight:700;border-radius:99px;padding:3px 9px}
+  .pill.ok{background:#e8fcf3;color:var(--green-ink)}
+  .pill.warn{background:#fdf1ec;color:#c25b3f}
+  .big{font-size:26px;font-weight:800;letter-spacing:-.02em}
+  .big small{font-size:13px;color:var(--soft);font-weight:600;margin-left:8px}
+  .ledger{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;font-size:13.5px;color:var(--muted)}
+  .ledger div{display:flex;justify-content:space-between;margin:4px 0}
+  .ledger .net{color:var(--ink);font-weight:750;border-top:1px solid var(--line);padding-top:6px;margin-top:6px}
+  .spark{display:block;width:100%;height:44px;margin-top:8px}
+
+  .free{background:linear-gradient(135deg,#0c1f2c,#123047);color:#fff;border-radius:24px;padding:44px 40px;position:relative;overflow:hidden}
+  .free:before{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 50% 0,rgba(7,243,171,.16),transparent 60%)}
+  .free > *{position:relative}
+  .free h2{color:#fff}
+  .free p{color:#aebfcd;font-size:16.5px;max-width:640px;margin:0 0 10px}
+  .free .tag{display:inline-block;background:rgba(7,243,171,.15);border:1px solid rgba(7,243,171,.5);color:var(--green2);font-weight:700;font-size:13px;border-radius:999px;padding:6px 14px;margin-bottom:16px}
+
+  .faq details{border:1px solid var(--line);border-radius:14px;background:var(--card);margin-bottom:12px;box-shadow:var(--shadow);overflow:hidden}
+  .faq summary{list-style:none;cursor:pointer;padding:18px 22px;font-weight:700;font-size:16.5px;display:flex;justify-content:space-between;align-items:center}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary:after{content:"+";font-size:22px;color:var(--blue);font-weight:700}
+  .faq details[open] summary:after{content:"\2013"}
+  .faq p{margin:0;padding:0 22px 20px;color:var(--muted);font-size:15.5px}
+
+  .final{background:linear-gradient(135deg,#0c1f2c,#123047);color:#fff;border-radius:24px;padding:48px;text-align:center;position:relative;overflow:hidden}
+  .final:before{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 50% 0,rgba(47,206,140,.18),transparent 60%)}
+  .final > *{position:relative}
+  .final h2{color:#fff}
+  .final .sub{color:#aebfcd;margin-left:auto;margin-right:auto}
+  .form{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:520px;margin:6px auto 0}
+  @media(max-width:680px){.form{grid-template-columns:1fr}}
+  .form input{padding:13px 15px;border-radius:11px;border:none;font-size:16px}
+  .final .btn{margin-top:14px;max-width:520px;width:100%;margin-left:auto;margin-right:auto}
+  .final .or{color:#8ea2b3;font-size:14px;margin-top:16px}
+  .final .or a{color:#fff;text-decoration:underline}
+  .sent{display:none;background:rgba(7,243,171,.15);border:1px solid rgba(7,243,171,.5);color:var(--green2);border-radius:12px;padding:14px 18px;max-width:520px;margin:16px auto 0;font-weight:700}
+
+  footer{padding:36px 0 56px;color:var(--soft);font-size:13.5px;text-align:center;border-top:1px solid var(--line);margin-top:20px}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="wrap row">
+    <div class="brand"><img src="senco-logo.svg" alt="Senco"><span class="b360">360</span></div>
+    <a class="btn nav-btn" href="#look">Book a look</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <span class="kicker reveal">Built by DTC founders</span>
+    <h1 class="reveal">Your whole brand. <span class="hl">One screen.</span></h1>
+    <p class="lede reveal">Shopify, Klaviyo, Meta, your 3PL, your books. Senco 360 reads
+    the tools you already use and tells you every morning what actually matters. Free
+    when you process payments with Senco.</p>
+    <div class="cta-row reveal">
+      <a class="btn lg" href="#look">Book a look</a>
+      <a class="btn lg ghost" href="#magic">See it working</a>
+    </div>
+    <p class="micro reveal">No new tool to learn. Your stack stays exactly where it is.</p>
+
+    <div class="hero-shot reveal" id="magic">
+      <div class="hs-top">
+        <span class="hs-dot"></span><span class="hs-dot"></span><span class="hs-dot"></span>
+        <span class="hs-title">Senco 360 &middot; Tuesday 7:02 AM</span>
+      </div>
+      <div class="hs-body">
+        <div class="tiles">
+          <div class="tile"><small>Net yesterday</small><b>$18,412</b><span class="up">+6%</span></div>
+          <div class="tile"><small>Orders</small><b>312</b><span class="up">+11</span></div>
+          <div class="tile"><small>Ad spend</small><b>$6,930</b><span class="down">-4%</span></div>
+          <div class="tile"><small>Needs attention</small><b>2</b></div>
+        </div>
+        <div class="hs-brief">
+          <div class="row2"><span class="d" style="background:#c25b3f"></span><span><b>Berry 60ct runs out in 12 days.</b> Sell-through is up 18% this week. Reorder by Thursday to stay ahead of the 3PL lead time.</span></div>
+          <div class="row2"><span class="d" style="background:var(--blue)"></span><span><b>Subscription churn ticked up on the 90ct plan.</b> 9 cancels this week vs 4 last week. Most quit at the second renewal.</span></div>
+          <div class="row2"><span class="d" style="background:var(--green)"></span><span><b>Yesterday beat the 30-day average.</b> Repeat orders did it, not ads. Klaviyo flow 3 is pulling its weight.</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="demo-note reveal">Demo data. Your screen runs on your numbers.</p>
+  </div>
+</header>
+
+<!-- TRUST -->
+<div class="trust">
+  <div class="wrap">
+    <span>Built by founders who run a DTC brand</span>
+    <span><b>Payments</b> + <b>analytics</b> in one place</span>
+    <span>Free with Senco payments</span>
+  </div>
+</div>
+
+<!--
+  FOUNDER VIDEO SECTION: parked until the 30-second 360 clip is filmed.
+  When ready, restore the section here (same card pattern as sencopay.ai homepage)
+  with <video controls poster="..."> and the mp4 in this folder.
+-->
+
+<!-- THE STACK IT READS -->
+<section style="background:var(--bg2)">
+  <div class="wrap center">
+    <p class="ey reveal">No new tool to learn</p>
+    <h2 class="reveal">It reads the stack you already run</h2>
+    <p class="sub reveal">Connect once. 360 pulls the numbers together and does the thinking.</p>
+    <div class="stack reveal">
+      <span class="chip">Shopify</span>
+      <span class="chip">WooCommerce</span>
+      <span class="chip">BigCommerce</span>
+      <span class="chip">Klaviyo</span>
+      <span class="chip">Meta Ads</span>
+      <span class="chip">Amazon</span>
+      <span class="chip">Your 3PL</span>
+      <span class="chip">QuickBooks</span>
+      <span class="chip">Subscriptions</span>
+      <span class="chip">Reviews</span>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT IT DOES -->
+<section>
+  <div class="wrap">
+    <p class="ey reveal">What you see</p>
+    <h2 class="reveal">The four things a brand lives or dies on</h2>
+    <p class="sub reveal">Not another dashboard of charts. Answers. All numbers below are demo data.</p>
+    <div class="feat">
+
+      <div class="mini reveal">
+        <div class="mock">
+          <div class="mock-h">Inventory runway</div>
+          <div class="mock-b">
+            <div class="mrow"><span class="nm">Berry 60ct</span><span class="bar"><i style="width:22%;background:#c25b3f"></i></span><span class="pill warn">12 days</span></div>
+            <div class="mrow"><span class="nm">Citrus 30ct</span><span class="bar"><i style="width:58%;background:var(--blue)"></i></span><span class="pill ok">34 days</span></div>
+            <div class="mrow"><span class="nm">Original 90ct</span><span class="bar"><i style="width:83%;background:var(--green)"></i></span><span class="pill ok">61 days</span></div>
+          </div>
+        </div>
+        <b>Know what runs out, before it does</b>
+        <p>Demand forecasts by SKU. Reorder recommendations before the stockout, not after.</p>
+      </div>
+
+      <div class="mini reveal">
+        <div class="mock">
+          <div class="mock-h">Yesterday, after everything</div>
+          <div class="mock-b">
+            <span class="big">$18,412 <small>net</small></span>
+            <div class="ledger">
+              <div><span>Sales</span><span>$31,204</span></div>
+              <div><span>Ad spend</span><span>-$6,930</span></div>
+              <div><span>Fees and refunds</span><span>-$5,862</span></div>
+              <div class="net"><span>What you kept</span><span>$18,412</span></div>
+            </div>
+          </div>
+        </div>
+        <b>One cash number, not five reports</b>
+        <p>What yesterday really made after fees, ads, and refunds. Where cash lands next month.</p>
+      </div>
+
+      <div class="mini reveal">
+        <div class="mock">
+          <div class="mock-h">Morning brief &middot; 7:02 AM</div>
+          <div class="mock-b">
+            <div class="mrow"><span class="pill warn">Act</span><span>Reorder Berry 60ct by Thursday</span></div>
+            <div class="mrow"><span class="pill ok">Good</span><span>Repeat orders beat the 30-day average</span></div>
+            <div class="mrow"><span class="pill ok">Watch</span><span>90ct plan cancels doubled this week</span></div>
+          </div>
+        </div>
+        <b>A morning brief that thinks</b>
+        <p>Every day, the few things that changed and what to do about them. Read it with your coffee.</p>
+      </div>
+
+      <div class="mini reveal">
+        <div class="mock">
+          <div class="mock-h">Trailing 14 days</div>
+          <div class="mock-b">
+            <span class="big">$243K <small>net, 14 days</small></span>
+            <svg class="spark" viewBox="0 0 300 44" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M0,34 L21,30 L43,32 L64,26 L86,28 L107,22 L129,25 L150,18 L171,21 L193,15 L214,18 L236,12 L257,14 L279,8 L300,10" fill="none" stroke="#1A73E8" stroke-width="2.5"/>
+              <path d="M0,34 L21,30 L43,32 L64,26 L86,28 L107,22 L129,25 L150,18 L171,21 L193,15 L214,18 L236,12 L257,14 L279,8 L300,10 L300,44 L0,44 Z" fill="rgba(7,243,171,.12)" stroke="none"/>
+            </svg>
+          </div>
+        </div>
+        <b>The trend, without the spreadsheet</b>
+        <p>Sales, spend, and cash on one line you can read in five seconds. No exports, no gluing.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FREE WITH PAYMENTS -->
+<section style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="free reveal">
+      <span class="tag">How free works</span>
+      <h2>Free when you process payments with Senco</h2>
+      <p>Senco is a payments company built for hard-to-approve brands. Process with us and
+      360 is included. That is the whole model: the software makes you sharper, the
+      processing pays for it.</p>
+      <p>Not ready to move payments? You can still get a look at the product and a free
+      read of your current processing statement. No switching required to find out.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section>
+  <div class="wrap narrow">
+    <p class="ey center reveal">Straight answers</p>
+    <h2 class="center reveal">The questions you are already asking</h2>
+    <div class="faq" style="margin-top:26px">
+      <details class="reveal"><summary>Is it really free?</summary><p>Yes, when you process payments with Senco. No separate software bill. If you keep your current processor, we will quote 360 as standalone software.</p></details>
+      <details class="reveal"><summary>Do I have to replace my tools?</summary><p>No. 360 connects to Shopify, Klaviyo, Meta, your 3PL, and your books. Everything stays where it is. 360 sits on top and reads it.</p></details>
+      <details class="reveal"><summary>What does setup look like?</summary><p>You connect your accounts with a few clicks, each one is a standard secure login. Data starts flowing the same day. We walk you through it.</p></details>
+      <details class="reveal"><summary>Is my data safe?</summary><p>Yes. Read-only connections wherever the platform allows it, and your data is used only to run your dashboard. We do not share it or sell it.</p></details>
+      <details class="reveal"><summary>What kind of brands is this for?</summary><p>DTC brands with repeat or subscription volume, especially the ones payments companies call high risk: CBD, supplements, peptides, telehealth, and friends. Our co-founder runs a brand in this space.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section id="look">
+  <div class="wrap">
+    <div class="final reveal">
+      <h2>See your brand on one screen</h2>
+      <p class="sub">15 minutes. We show you the product on a real brand, you decide if
+      it fits. No pitch deck.</p>
+      <form class="form" action="https://formsubmit.co/raffaele@senco.ai" method="POST">
+        <input type="hidden" name="_subject" value="Book my look - sencopay.ai/360">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="https://sencopay.ai/360/?sent=1">
+        <input type="text" name="name" required placeholder="Your name">
+        <input type="text" name="brand" required placeholder="Your brand">
+        <input type="email" name="email" required placeholder="Email">
+        <input type="text" name="store_platform" placeholder="Your store platform">
+        <button class="btn lg" type="submit" style="grid-column:1/-1">Book my look</button>
+      </form>
+      <div class="sent" id="sent">Got it. We will reply from raffaele@senco.ai within a day.</div>
+      <p class="or">or write us: <a href="mailto:raffaele@senco.ai">raffaele@senco.ai</a></p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">Senco. A smarter way to process payments.</div>
+</footer>
+
+<script>
+  var io = new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+  if(location.search.indexOf('sent=1')>-1){document.getElementById('sent').style.display='block';}
+</script>
+
+</body>
+</html>
