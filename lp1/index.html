@@ -376,11 +376,12 @@
         <div class="hero-phone" style="margin-top:0">
           <div class="phone">
             <div class="phone-in">
-              <!-- TODO: Ken's video (promised in the Aug 6 sync, "coming from the merchant angle" - 8-figure high-risk merchant). Swap this placeholder for a real <video> + poster once he sends the file, same markup as the Raffaele video above. -->
-              <div style="text-align:center;color:rgba(234,241,248,.7);padding:20px">
-                <div style="font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase">Ken's video</div>
-                <div style="font-size:12.5px;margin-top:6px">coming soon</div>
-              </div>
+              <video playsinline preload="metadata" poster="../ken-intro-poster.jpg">
+              <source src="../ken-intro.mp4" type="video/mp4">
+            </video>
+            <button class="playover" id="playover-ken" aria-label="Play Ken's video">
+              <span class="pobtn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+            </button>
             </div>
           </div>
           <p class="herocap">Ken, co-founder</p>
@@ -482,6 +483,16 @@
       po.style.display = 'none';
     });
     pv.addEventListener('ended', () => { pv.removeAttribute('controls'); po.style.display = 'flex'; });
+  }
+  const pok = document.getElementById('playover-ken');
+  const pvk = pok ? pok.closest('.phone-in').querySelector('video') : null;
+  if (pok && pvk) {
+    pok.addEventListener('click', () => {
+      pvk.setAttribute('controls','');
+      pvk.play();
+      pok.style.display = 'none';
+    });
+    pvk.addEventListener('ended', () => { pvk.removeAttribute('controls'); pok.style.display = 'flex'; });
   }
 
   // click-to-copy email
