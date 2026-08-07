@@ -28,6 +28,7 @@
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
+  h1,h2,h3{text-wrap:balance}
   body{font-family:"Poppins",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:#fff;color:var(--body);line-height:1.7;font-size:16px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   ::selection{background:rgba(123,218,243,.5)}
   :focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:6px}
@@ -122,6 +123,8 @@
   .vert{display:inline-flex;align-items:center;gap:10px;font-size:14.5px;font-weight:500;color:var(--ink);background:#fff;border-radius:999px;padding:13px 24px;box-shadow:0 4px 16px rgba(16,24,40,.08);transition:transform .2s var(--ease),box-shadow .2s ease}
   .vert:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(16,24,40,.12)}
   .vert::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--grad)}
+  .vert.match{background:var(--ink);color:#fff;box-shadow:0 10px 26px rgba(16,24,40,.18)}
+  .vert.match::before{background:var(--green)}
   .vertnote{font-size:15px;color:var(--body);margin:30px auto 0;max-width:680px;line-height:1.75;text-align:center}
 
   /* calculator */
@@ -174,6 +177,17 @@
   footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
   footer .fl{font-size:14px;color:var(--mut)}
 
+  /* aurora drift on gradient bands */
+  @keyframes aurora{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(3%,-4%) scale(1.08)}}
+  @keyframes aurora2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-4%,3%) scale(1.1)}}
+  .hero::after,.band::after,.finalband::after{content:"";position:absolute;inset:-12%;pointer-events:none;background:
+    radial-gradient(520px 340px at 18% 30%,rgba(255,255,255,.34),transparent 62%),
+    radial-gradient(460px 320px at 82% 68%,rgba(26,115,232,.14),transparent 65%);
+    animation:aurora 16s ease-in-out infinite;will-change:transform}
+  .band::after,.finalband::after{animation:aurora2 19s ease-in-out infinite}
+  .hero .wrap,.band .wrap,.finalband .wrap{z-index:1}
+  @media (prefers-reduced-motion: reduce){.hero::after,.band::after,.finalband::after{animation:none}}
+
   /* reveal */
   .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
   .reveal.in{opacity:1;transform:none}
@@ -184,10 +198,11 @@
   /* KPI showcase band */
   .kpiband{padding:80px 0}
   .kpigrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:48px 0 44px}
-  .kpitile{background:#fff;box-shadow:0 4px 20px rgba(16,24,40,.08);border-radius:20px;padding:30px 20px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:168px}
-  .kpitile .n{font-size:clamp(30px,4vw,44px);font-weight:700;color:var(--ink);letter-spacing:-.02em;line-height:1.05;font-variant-numeric:tabular-nums}
+  .kpitile{background:#fff;box-shadow:0 4px 20px rgba(16,24,40,.08);border-radius:20px;padding:36px 24px 32px;text-align:center;transition:transform .25s var(--ease),box-shadow .25s ease}
+  .kpitile:hover{transform:translateY(-4px);box-shadow:0 14px 34px rgba(16,24,40,.13)}
+  .kpitile .n{font-size:clamp(30px,4vw,44px);font-weight:700;letter-spacing:-.02em;line-height:1.05;font-variant-numeric:tabular-nums;background:linear-gradient(105deg,var(--blue) 0%,var(--green-d) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
   .kpitile .l{font-size:13px;color:var(--body);margin-top:10px;line-height:1.5}
-  @media (max-width:860px){.kpigrid{grid-template-columns:1fr 1fr}}
+  @media (max-width:860px){.kpigrid{grid-template-columns:1fr;max-width:420px;margin-left:auto;margin-right:auto}}
   @media (max-width:860px){
     .grid2,.steps,.quotes,.trustgrid{grid-template-columns:1fr}
     .stepline{flex-direction:column;align-items:center;gap:14px}
@@ -245,6 +260,8 @@
 -->
 <header class="hero">
   <div class="wrap">
+    <!-- Personalization (Apollo merge fields via URL, e.g. ?brand=Batch&vertical=cbd): id="personal-badge" is hidden by default and only shown by JS below when a ?brand= param is present. Never edit its text directly here. -->
+    <div class="kicker reveal" id="personal-badge" style="display:none"></div>
     <h1 class="reveal" style="max-width:none">You're priced on your category's risk, not your own.</h1>
     <p class="lead reveal">Clean chargeback ratio, years of history, real products, real compliance. You're still paying the rate built for the worst merchant in your vertical. Give us 15 minutes, and we'll tell you what you should be paying. No strings attached.</p>
     <p class="micro reveal">No pressure, no credit pull, no obligation. Your statement isn't shared with anyone, and we're happy to sign your NDA.</p>
@@ -321,11 +338,11 @@
     <div class="kpigrid">
       <div class="kpitile reveal">
         <div class="n">1 hour</div>
-        <div class="l">usual statement review turnaround</div>
+        <div class="l">statement review turnaround</div>
       </div>
       <div class="kpitile reveal">
         <div class="n">75-85%</div>
-        <div class="l">approval rate range merchants land in after they move</div>
+        <div class="l">approval rates after merchants switch</div>
       </div>
       <div class="kpitile reveal">
         <div class="n">High risk</div>
@@ -338,14 +355,14 @@
     <span class="ey reveal">Where we work</span>
     <h2 class="reveal">The verticals we live in</h2>
     <div class="verts reveal">
-      <div class="vert">Adult &amp; creator platforms</div>
-      <div class="vert">Vape &amp; e-cig</div>
-      <div class="vert">Kratom &amp; botanicals</div>
-      <div class="vert">Peptides &amp; research</div>
-      <div class="vert">Telehealth</div>
-      <div class="vert">Supplements &amp; nutra</div>
-      <div class="vert">CBD &amp; hemp</div>
-      <div class="vert">Coaching &amp; digital products</div>
+      <div class="vert" data-vert="adult">Adult &amp; creator platforms</div>
+      <div class="vert" data-vert="vape">Vape &amp; e-cig</div>
+      <div class="vert" data-vert="kratom">Kratom &amp; botanicals</div>
+      <div class="vert" data-vert="peptides">Peptides &amp; research</div>
+      <div class="vert" data-vert="telehealth">Telehealth</div>
+      <div class="vert" data-vert="nutra">Supplements &amp; nutra</div>
+      <div class="vert" data-vert="cbd">CBD &amp; hemp</div>
+      <div class="vert" data-vert="coaching">Coaching &amp; digital products</div>
     </div>
     <p class="vertnote reveal">If you're on this list, we already know which banks will write your vertical into the agreement, what your descriptors should look like, and what a normal approval rate is for you. You won't spend the first ten minutes of a call explaining your own industry.</p>
   </div>
@@ -453,6 +470,29 @@
       c.style.display='inline'; setTimeout(() => c.style.display='none', 1600);
     });
   });
+
+  // Personalization from Apollo merge fields in the URL, e.g.
+  // sencopay.ai/?brand=Batch&vertical=cbd
+  // - ?vertical= highlights the matching pill in "verticals we live in"
+  // - ?brand= shows a badge above the H1 with the brand name (textContent only, never innerHTML - untrusted input)
+  (function personalize(){
+    const params = new URLSearchParams(location.search);
+    const vertical = (params.get('vertical') || '').toLowerCase().trim();
+    const brand = (params.get('brand') || '').trim().slice(0, 60);
+
+    if (vertical) {
+      const match = document.querySelector('.vert[data-vert="' + CSS.escape(vertical) + '"]');
+      if (match) match.classList.add('match');
+    }
+
+    if (brand) {
+      const badge = document.getElementById('personal-badge');
+      if (badge) {
+        badge.textContent = 'Built for high-risk brands like ' + brand;
+        badge.style.display = 'inline-flex';
+      }
+    }
+  })();
 </script>
 
 </body>
