@@ -61,7 +61,7 @@
   .micro{font-size:13.5px;color:var(--body);margin-top:18px;opacity:.85}
 
   /* app screenshot frame in hero */
-  .appwrap{max-width:1020px;margin:52px auto 0}
+  .appwrap{max-width:880px;margin:52px auto 0}
   .appshot{background:#fff;border-radius:18px;box-shadow:0 30px 80px rgba(16,24,40,.22);overflow:hidden;text-align:left}
   .app-top{display:flex;align-items:center;gap:7px;padding:12px 18px;border-bottom:1px solid var(--line);background:var(--gray)}
   .app-dot{width:10px;height:10px;border-radius:50%;background:#D9DEE6}
@@ -108,21 +108,24 @@
   .fcard h3{font-size:21px;font-weight:600;color:var(--ink);letter-spacing:-.015em;margin-bottom:10px}
   .fcard p{font-size:14.5px;color:var(--body);line-height:1.75}
 
-  /* feature rows: big real screens, alternating sides */
-  .frow{display:grid;grid-template-columns:.62fr 1fr;gap:44px;align-items:center;margin-top:64px}
-  .frow.flip{grid-template-columns:1fr .62fr}
-  .frow.flip .ftext{order:2}
-  .frow.flip .fshot{order:1}
-  .ftext h3{font-size:24px;font-weight:600;color:var(--ink);letter-spacing:-.015em;margin-bottom:12px;line-height:1.3}
-  .ftext p{font-size:15.5px;color:var(--body);line-height:1.8}
-  .fshot{border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 20px 55px rgba(16,24,40,.14);background:#fff;display:block;transition:transform .25s var(--ease),box-shadow .25s ease}
-  .fshot:hover{transform:translateY(-3px);box-shadow:0 26px 70px rgba(16,24,40,.2)}
-  .fshot img{width:100%;display:block}
-  @media (max-width:860px){
-    .frow,.frow.flip{grid-template-columns:1fr;gap:18px;margin-top:52px}
-    .frow.flip .ftext{order:1}
-    .frow.flip .fshot{order:2}
-  }
+  /* mock screens inside feature cards */
+  .mock{border-radius:14px;border:1px solid var(--line);background:#fff;margin-bottom:20px;overflow:hidden;box-shadow:0 4px 16px rgba(16,24,40,.05)}
+  .mock img{width:100%;display:block}
+  .mock-h{padding:10px 16px;border-bottom:1px solid var(--line);background:var(--gray);font-size:11px;font-weight:600;color:var(--mut);text-transform:uppercase;letter-spacing:.08em}
+  .mock-b{padding:16px}
+  .mrow{display:flex;align-items:center;gap:10px;margin:9px 0;font-size:13px}
+  .mrow .nm{flex:0 0 104px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bar{flex:1;height:8px;border-radius:99px;background:var(--gray);overflow:hidden}
+  .bar i{display:block;height:100%;border-radius:99px}
+  .pill{flex:0 0 auto;font-size:11px;font-weight:600;border-radius:99px;padding:3px 10px}
+  .pill.ok{background:rgba(7,243,171,.16);color:var(--green-d)}
+  .pill.warn{background:#FEF0C7;color:#B54708}
+  .big{font-size:24px;font-weight:700;color:var(--ink);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .big small{font-size:12.5px;color:var(--mut);font-weight:500;margin-left:8px}
+  .ledger{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;font-size:13px;color:var(--body)}
+  .ledger div{display:flex;justify-content:space-between;margin:4px 0}
+  .ledger .net{color:var(--ink);font-weight:600;border-top:1px solid var(--line);padding-top:6px;margin-top:6px}
+  .spark{display:block;width:100%;height:44px;margin-top:8px}
 
   /* gradient band sections */
   .band{background:var(--band);position:relative;overflow:hidden}
@@ -183,6 +186,8 @@
     .navzone{top:10px;padding:0 12px}
   }
 </style>
+<!-- Apollo visitor tracking -->
+<script>function initApollo(){var n=Math.random().toString(36).substring(7),o=document.createElement("script");o.src="https://assets.apollo.io/micro/website-tracker/tracker.iife.js?nocache="+n,o.async=!0,o.defer=!0,o.onload=function(){window.trackingFunctions.onLoad({appId:"6631795937353a043863b637"})},document.head.appendChild(o)}initApollo();</script>
 </head>
 <body>
 
@@ -233,45 +238,38 @@
     <span class="ey reveal">What you see</span>
     <h2 class="reveal">The four things a brand lives or dies on</h2>
     <p class="sub reveal">Not another dashboard of charts. Answers. Every screen below is the real product.</p>
+    <div class="grid2">
 
-    <div class="frow reveal">
-      <div class="ftext">
+      <div class="fcard reveal">
+        <div class="mock"><img src="screens/forecasting.jpg" alt="Senco 360 forecasting: demand and inventory forecast per SKU, per channel, six months out"></div>
         <h3>Know what runs out, before it does</h3>
         <p>Demand forecasts by SKU, per channel, six months out. Reorder recommendations before the stockout, not after.</p>
       </div>
-      <a class="fshot" href="screens/forecasting.jpg" target="_blank"><img src="screens/forecasting.jpg" alt="Senco 360 forecasting: demand and inventory forecast per SKU, per channel, six months out"></a>
-    </div>
 
-    <div class="frow flip reveal">
-      <div class="ftext">
+      <div class="fcard reveal">
+        <div class="mock"><img src="screens/revenue.jpg" alt="Senco 360 revenue snapshot: every sales channel from gross sales down to net"></div>
         <h3>One revenue number, not five reports</h3>
         <p>DTC, subscriptions, B2B, and Amazon in one screen, from gross sales down to net. What you actually kept.</p>
       </div>
-      <a class="fshot" href="screens/revenue.jpg" target="_blank"><img src="screens/revenue.jpg" alt="Senco 360 revenue snapshot: every sales channel from gross sales down to net"></a>
-    </div>
 
-    <div class="frow reveal">
-      <div class="ftext">
+      <div class="fcard reveal">
+        <div class="mock"><img src="screens/lothealth.jpg" alt="Senco 360 lot health: every production lot tied to its refunds, tickets and reviews"></div>
         <h3>Trace problems to the lot</h3>
         <p>Refunds, support tickets, and bad reviews traced back to the exact production lot, from the 3PL to the customer.</p>
       </div>
-      <a class="fshot" href="screens/lothealth.jpg" target="_blank"><img src="screens/lothealth.jpg" alt="Senco 360 lot health: every production lot tied to its refunds, tickets and reviews"></a>
-    </div>
 
-    <div class="frow flip reveal">
-      <div class="ftext">
+      <div class="fcard reveal">
+        <div class="mock"><img src="screens/marketing.jpg" alt="Senco 360 marketing and attribution: spend, MER, CAC and channel performance"></div>
         <h3>Every ad dollar, accounted for</h3>
         <p>Spend, MER, CAC, and new-customer economics by channel. What came back, without the spreadsheet.</p>
       </div>
-      <a class="fshot" href="screens/marketing.jpg" target="_blank"><img src="screens/marketing.jpg" alt="Senco 360 marketing and attribution: spend, MER, CAC and channel performance"></a>
-    </div>
 
-    <div class="frow reveal">
-      <div class="ftext">
+      <div class="fcard wide reveal">
+        <div class="mock"><img src="screens/operations.jpg" alt="Senco 360 operations and CX: fulfillment, support and product quality in one place"></div>
         <h3>Support, shipping, and quality in one place</h3>
         <p>Fulfillment SLAs, support by topic, reviews, and refunds by product. Problems surface before customers churn.</p>
       </div>
-      <a class="fshot" href="screens/operations.jpg" target="_blank"><img src="screens/operations.jpg" alt="Senco 360 operations and CX: fulfillment, support and product quality in one place"></a>
+
     </div>
   </div>
 </section>
